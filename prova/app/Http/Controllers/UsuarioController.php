@@ -15,7 +15,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        return "Teste";
     }
 
     /**
@@ -26,6 +26,16 @@ class UsuarioController extends Controller
     public function create()
     {
         //
+    }
+
+    /**
+     * Abre a tela de adicionar um novo usuario
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adicionar() 
+    {
+        return view('usuario.adicionar');
     }
 
     /**
@@ -48,6 +58,16 @@ class UsuarioController extends Controller
     public function show(Usuario $usuario)
     {
         //
+    }
+
+    /**
+     * Abre a tela de consultar os usuarios
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function consultar() 
+    {
+        return view('usuario.consultar');
     }
 
     /**
