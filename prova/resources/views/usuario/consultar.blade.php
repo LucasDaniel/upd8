@@ -28,7 +28,58 @@
             </div>
 
             <div class="informacao-pagina">
-                consultar
+                @if(!isset($usuarios))
+                Adicione os campos para pesquisar
+                <div style="width:30%; margin-left:auto; margin-right:auto; margin-top:1em;">
+                    <form method="post" action="{{ route('usuario.consultar') }}">
+                        @csrf
+                        <input type="text" name="nome" placeholder="Nome" class="borda-preta">
+                        <input type="text" name="cpf" placeholder="CPF" class="borda-preta">
+                        <input type="radio" id="m" name="sexo" value="m">
+                        <label for="html">Masculino</label><br>
+                        <input type="radio" id="f" name="sexo" value="f">
+                        <label for="css">Feminino</label><br>
+                        <input type="text" name="endereco" placeholder="Endereço" class="borda-preta">
+                        <input type="text" name="cidade" placeholder="Cidade" class="borda-preta">
+                        <input type="text" name="estado" placeholder="Estado (MG)" class="borda-preta">
+                        <label for="data_nascimento">Data de nascimento:</label>
+                        <input type="date" id="data_nascimento" name="data_nascimento">
+                        <button type="submit" class="borda-preta">Pesquisar</button>
+                    </form>
+                </div>
+                @else
+                Consulta 
+                <table border=1 width=95% style="margin-top:1em; margin-left:auto; margin-right:auto;">
+                    <thead>
+                        <tr>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                            <th>Nome</th>
+                            <th>Cpf</th>
+                            <th>Sexo</th>
+                            <th>Endereço</th>
+                            <th>Cidade</th>
+                            <th>Estado</th>
+                            <th>Data de nascimento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($usuarios as $usuario)
+                            <tr>
+                                <th><a href="#">Editar</a></th>
+                                <th><a href="#">Excluir</a></th>
+                                <th class="th-normal">{{ $usuario->nome }}</th>
+                                <th class="th-normal">{{ $usuario->cpf }}</th>
+                                <th class="th-normal">{{ $usuario->sexo }}</th>
+                                <th class="th-normal">{{ $usuario->endereco }}</th>
+                                <th class="th-normal">{{ $usuario->cidade }}</th>
+                                <th class="th-normal">{{ $usuario->estado }}</th>
+                                <th class="th-normal">{{ $usuario->data_nascimento }}</th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @endif
             </div>
         </div>
 

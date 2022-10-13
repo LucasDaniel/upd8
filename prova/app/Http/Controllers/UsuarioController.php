@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 
@@ -15,7 +16,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return "Teste";
+        //
     }
 
     /**
@@ -25,16 +26,17 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('usuario.adicionar');
     }
 
     /**
-     * Abre a tela de adicionar um novo usuario
+     * Adiciona um novo usuario
      *
      * @return \Illuminate\Http\Response
      */
-    public function adicionar() 
+    public function add(StoreUsuarioRequest $request) 
     {
+        Usuario::create($request->all());
         return view('usuario.adicionar');
     }
 
@@ -46,7 +48,8 @@ class UsuarioController extends Controller
      */
     public function store(StoreUsuarioRequest $request)
     {
-        //
+        Usuario::create($request->all());
+        return redirect()->route('usuario.adicionar');
     }
 
     /**
@@ -68,6 +71,30 @@ class UsuarioController extends Controller
     public function consultar() 
     {
         return view('usuario.consultar');
+    }
+
+    /**
+     * Pesquisa no banco pelos parametros passados pelo argumento
+     *
+     * @param  \App\Models\Usuario  $usuario
+     * @return \Illuminate\Http\Response
+     */
+    public function search(StoreUsuarioRequest $request)
+    {
+        $usuario = DB::table('usuarios');
+        
+        if (($request->input('nome')) != null) $usuario = $usuario->where('nome','like','%'.$request->input('nome').'%');
+        if (($request->input('cpf')) != null) $usuario = $usuario->where('cpf','like','%'.$request->input('cpf').'%');
+        if (($request->input('sexo')) != null) $usuario = $usuario->where('sexo','like','%'.$request->input('sexo').'%');
+        if (($request->input('endereco')) != null) $usuario = $usuario->where('endereco','like','%'.$request->input('endereco').'%');
+        if (($request->input('cidade')) != null) $usuario = $usuario->where('cidade','like','%'.$request->input('cidade').'%');
+        if (($request->input('estado')) != null) $usuario = $usuario->where('estado','like','%'.$request->input('estado').'%');
+        if (($request->input('data_nascimento')) != null) $usuario = $usuario->where('data_nascimento',date($request->input('data_nascimento')));
+
+        $usuarios = $usuario->get();
+        
+        return view('usuario.consultar', ['usuarios' => $usuarios]);
+
     }
 
     /**

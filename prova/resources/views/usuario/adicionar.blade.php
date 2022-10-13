@@ -29,18 +29,19 @@
 
             <div class="informacao-pagina">
                 <div style="width:30%; margin-left:auto; margin-right:auto;">
-                    <form method="post" action="">
-                        <input type="text" name="nome" placeholder="Nome" class="borda-preta">
-                        <input type="text" name="cpf" placeholder="CPF" class="borda-preta">
-                        <input type="radio" id="m" name="sexo" value="m">
+                    <form method="post" action="{{ route('usuario.adicionar') }}">
+                        @csrf
+                        <input required type="text" name="nome" placeholder="Nome" class="borda-preta">
+                        <input required type="text" name="cpf" placeholder="CPF" class="borda-preta">
+                        <input required type="radio" id="m" name="sexo" value="m">
                         <label for="html">Masculino</label><br>
-                        <input type="radio" id="f" name="sexo" value="f">
+                        <input required type="radio" id="f" name="sexo" value="f">
                         <label for="css">Feminino</label><br>
-                        <input type="text" name="endereco" placeholder="Endereço" class="borda-preta">
-                        <input type="text" name="cidade" placeholder="Cidade" class="borda-preta">
-                        <input type="text" name="estado" placeholder="Estado (MG)" class="borda-preta">
+                        <input required type="text" name="endereco" placeholder="Endereço" class="borda-preta">
+                        <input required type="text" name="cidade" placeholder="Cidade" class="borda-preta">
+                        <input required type="text" name="estado" placeholder="Estado (MG)" class="borda-preta">
                         <label for="data_nascimento">Data de nascimento:</label>
-                        <input type="date" id="data_nascimento" name="data_nascimento">
+                        <input required type="date" id="data_nascimento" name="data_nascimento">
                         <button type="submit" class="borda-preta">Adicionar</button>
                     </form>
                 </div>

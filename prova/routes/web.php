@@ -18,5 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-Route::get('/usuario/adicionar', 'App\Http\Controllers\UsuarioController@adicionar')->name('usuario.adicionar');
+Route::get('/usuario/adicionar', 'App\Http\Controllers\UsuarioController@create')->name('usuario.adicionar');
+Route::post('/usuario/adicionar', 'App\Http\Controllers\UsuarioController@add')->name('usuario.adicionar');
 Route::get('/usuario/consultar', 'App\Http\Controllers\UsuarioController@consultar')->name('usuario.consultar');
+Route::post('/usuario/consultar', 'App\Http\Controllers\UsuarioController@search')->name('usuario.consultar');
+Route::get('/usuario/excluir/{id}', 'App\Http\Controllers\UsuarioController@delete')->name('usuario.excluir');
