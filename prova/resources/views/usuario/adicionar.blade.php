@@ -29,6 +29,11 @@
 
             <div class="informacao-pagina">
                 <div style="width:30%; margin-left:auto; margin-right:auto;">
+                    @if(isset($_GET['msg']))
+                    {{ $_GET['msg'] }}
+                    <br>
+                    <br>
+                    @endif
                     <form method="post" action="{{ route('usuario.adicionar') }}">
                         @csrf
                         <input required type="text" name="nome" placeholder="Nome" class="borda-preta">

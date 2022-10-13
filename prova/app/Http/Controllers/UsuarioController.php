@@ -37,7 +37,7 @@ class UsuarioController extends Controller
     public function add(StoreUsuarioRequest $request) 
     {
         Usuario::create($request->all());
-        return view('usuario.adicionar');
+        return redirect()->route('usuario.adicionar', ['msg' => 'Registro adicionado com sucesso']);
     }
 
     /**
@@ -129,5 +129,17 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         //
+    }
+
+    /**
+     * Deleta o dado do banco a partir de seu id
+     *
+     * @param  \App\Models\Usuario  $usuario
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id) {
+        Usuario::find($id)->delete();
+        $msg = 'Registro excluido com sucesso';
+        return redirect()->route('usuario.consultar', ['msg' => $msg]);
     }
 }

@@ -28,6 +28,11 @@
             </div>
 
             <div class="informacao-pagina">
+                @if(isset($_GET['msg']))
+                {{ $_GET['msg'] }}
+                <br>
+                <br>
+                @endif
                 @if(!isset($usuarios))
                 Adicione os campos para pesquisar
                 <div style="width:30%; margin-left:auto; margin-right:auto; margin-top:1em;">
@@ -66,8 +71,8 @@
                     <tbody>
                         @foreach($usuarios as $usuario)
                             <tr>
-                                <th><a href="#">Editar</a></th>
-                                <th><a href="#">Excluir</a></th>
+                                <th><a href="{{ route('usuario.editar', $usuario->id) }}">Editar</a></th>
+                                <th><a href="{{ route('usuario.excluir', $usuario->id) }}">Excluir</a></th>
                                 <th class="th-normal">{{ $usuario->nome }}</th>
                                 <th class="th-normal">{{ $usuario->cpf }}</th>
                                 <th class="th-normal">{{ $usuario->sexo }}</th>
