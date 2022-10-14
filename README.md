@@ -24,6 +24,10 @@ Baixe o projeto com o git clone abaixo
 ```
 git clone https://github.com/LucasDaniel/upd8
 ```
+entre na pasta upd8
+```
+cd upd8
+```
 entre na pasta prova
 ```
 cd prova
@@ -51,3 +55,27 @@ Baixe o Mysql para o seu sistema operacional e rode-o.
 !!!No momento da instalação, não coloque senha para logar no banco de dados!!!
 
 Obs: Caso já tenha o Mysql instalado no computador, coloque o DB_USERNAME e DB_PASSWORD de acordo com o que você já colocou
+## Rodando o projeto
+
+Rode o projeto com 
+
+```bash
+  php artisan serve
+```
+
+Acesse o projeto na [url](http://127.0.0.1:8000/)
+
+## Gerando banco de dados
+
+Execute o migrates para criar o banco de dados
+
+```bash
+  php artisan migrate
+```
+
+Execute o seed para gerar registros de teste
+
+```bash
+  php artisan db:seed
+```
+
