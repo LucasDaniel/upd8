@@ -36,8 +36,54 @@ class UsuarioController extends Controller
      */
     public function add(StoreUsuarioRequest $request) 
     {
-        Usuario::create($request->all());
-        return redirect()->route('usuario.adicionar', ['msg' => 'Registro adicionado com sucesso']);
+
+        $msg = 'Erro ao adicionar';
+
+        if ($request->input('_token') != '') {
+            $regras = [
+                'nome' => 'required',
+                'cpf' => 'required|min:11|max:11',
+                'sexo' => 'required|min:1|max:1',
+                'endereco' => 'required|max:100',
+                'cidade' => 'required|max:50',
+                'estado' => 'required|min:4|max:20',
+                'data_nascimento' => 'required|date'
+            ];
+
+            $feedback = [
+                'required' => 'O campo :attribute deve ser preenchido',
+                'cpf.min' => 'O campo CPF deve ter no mínimo 11 caracteres',
+                'cpf.max' => 'O campo CPF deve ter no máximo 11 caracteres',
+                'sexo.min' => 'O campo sexo deve ter no mínimo 1 caractere',
+                'sexo.max' => 'O campo sexo deve ter no máximo 1 caractere',
+                'endereco.max' => 'O campo endereço deve ter no máximo 100 caracteres',
+                'cidade.max' => 'O campo cidade deve ter no máximo 50 caracteres',
+                'estado.min' => 'O campo estado deve ter no mínimo 4 caracteres',
+                'estado.max' => 'O campo estado deve ter no máximo 20 caracteres',
+                'data_nascimento.date' => 'O campo data de nascimento deve ser uma data',
+            ];
+
+            $request->validate($regras,$feedback);
+
+        }
+
+        if ($request->input('id') == '') {
+
+            $usuario = new Usuario();
+            $usuario->create($request->all());
+            $msg = 'Registro adicionado com sucesso';
+
+        } else {
+            
+            $usuario = Usuario::find($request->input('id'));
+            $update = $usuario->update($request->all());
+
+            if ($update) $msg = "Atualizado com sucesso";
+            else $msg = "Erro ao atualizar o registro";
+
+        }
+
+        return redirect()->route('usuario.adicionar', ['msg' => $msg]);
     }
 
     /**
@@ -91,9 +137,9 @@ class UsuarioController extends Controller
         if (($request->input('estado')) != null) $usuario = $usuario->where('estado','like','%'.$request->input('estado').'%');
         if (($request->input('data_nascimento')) != null) $usuario = $usuario->where('data_nascimento',date($request->input('data_nascimento')));
 
-        $usuarios = $usuario->get();
+        $usuarios = $usuario->paginate(2);
         
-        return view('usuario.consultar', ['usuarios' => $usuarios]);
+        return view('usuario.consultar', ['usuarios' => $usuarios, 'request' => $request->all()]);
 
     }
 
@@ -106,6 +152,19 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario)
     {
         //
+    }
+
+    /**
+     * Mostra a tela de edição
+     *
+     * @param  \App\Models\Usuario  $usuario
+     * @return \Illuminate\Http\Response
+     */
+    public function editar($id)
+    {
+        $usuario = Usuario::find($id);
+
+        return view('usuario.adicionar', ['usuario' => $usuario]);
     }
 
     /**

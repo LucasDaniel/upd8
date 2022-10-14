@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <title>Super Gestão - Sobre Nós</title>
+        <title>Upd8 - Home</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="{{ asset('css/estilo_basico.css') }}">
+        <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
     </head>
 
     <body>

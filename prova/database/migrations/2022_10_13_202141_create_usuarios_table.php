@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('cpf',11);
             $table->string('sexo',1);
             $table->string('endereco',100);
-            $table->string('cidade',40);
-            $table->string('estado',2);
+            $table->string('cidade',50);
+            $table->string('estado',20);
             $table->date('data_nascimento');
         });
     }
