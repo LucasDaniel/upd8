@@ -16,7 +16,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = Usuario::all();
+        return $usuarios;
     }
 
     /**
@@ -94,8 +95,32 @@ class UsuarioController extends Controller
      */
     public function store(StoreUsuarioRequest $request)
     {
+        $regras = [
+            'nome' => 'required',
+            'cpf' => 'required|min:11|max:11',
+            'sexo' => 'required|min:1|max:1',
+            'endereco' => 'required|max:100',
+            'cidade' => 'required|max:50',
+            'estado' => 'required|min:4|max:20',
+            'data_nascimento' => 'required|date'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'cpf.min' => 'O campo CPF deve ter no mínimo 11 caracteres',
+            'cpf.max' => 'O campo CPF deve ter no máximo 11 caracteres',
+            'sexo.min' => 'O campo sexo deve ter no mínimo 1 caractere',
+            'sexo.max' => 'O campo sexo deve ter no máximo 1 caractere',
+            'endereco.max' => 'O campo endereço deve ter no máximo 100 caracteres',
+            'cidade.max' => 'O campo cidade deve ter no máximo 50 caracteres',
+            'estado.min' => 'O campo estado deve ter no mínimo 4 caracteres',
+            'estado.max' => 'O campo estado deve ter no máximo 20 caracteres',
+            'data_nascimento.date' => 'O campo data de nascimento deve ser uma data',
+        ];
+
+        $request->validate($regras,$feedback);
         Usuario::create($request->all());
-        return redirect()->route('usuario.adicionar');
+        return ["msg" => "Registro adicionado com sucesso"];
     }
 
     /**
@@ -106,7 +131,7 @@ class UsuarioController extends Controller
      */
     public function show(Usuario $usuario)
     {
-        //
+        return $usuario;
     }
 
     /**
@@ -163,7 +188,6 @@ class UsuarioController extends Controller
     public function editar($id)
     {
         $usuario = Usuario::find($id);
-
         return view('usuario.adicionar', ['usuario' => $usuario]);
     }
 
@@ -176,7 +200,8 @@ class UsuarioController extends Controller
      */
     public function update(UpdateUsuarioRequest $request, Usuario $usuario)
     {
-        //
+        $usuario->update($request->all());
+        return $usuario;
     }
 
     /**
@@ -187,7 +212,8 @@ class UsuarioController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        $usuario->delete();
+        return ['msg' => 'Registro removido com sucesso'];
     }
 
     /**
